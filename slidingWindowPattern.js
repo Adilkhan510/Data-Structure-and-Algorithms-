@@ -108,3 +108,36 @@ const max_sub_array_of_size_k_refactored = (k, arr) => {
 }
 console.log(`Maximum sum of a subarray of size K: ${max_sub_array_of_size_k_refactored(3, [2, 1, 5, 1, 3, 2])}`);
 console.log(`Maximum sum of a subarray of size K: ${max_sub_array_of_size_k_refactored(2, [2, 3, 4, 1, 5])}`);
+
+// --------------------------------Problem #3:
+/*
+    Given an array of positive numbers and a positive number ‘S’, find the length of the smallest contiguous subarray whose sum is greater than or equal to ‘S’. Return 0, if no such subarray exists.
+    Input: [2, 1, 5, 2, 3, 2], S=7 
+    Output: 2
+    Explanation: The smallest subarray with a sum great than or equal to '7' is [5, 2].
+*/
+
+/*
+    Explanation : 
+        Time Complexity  : while it may seem like this might have a time complexity of O(N2) however in reality its O(N) because each while loop only runs once per element. 
+ */
+
+const smallest_sum_equal_to_S = (s,arr) => {
+    let windowSum = 0, minLength = Infinity, windowStart = 0
+    for(windowEnd=0; windowEnd<arr.length; windowEnd++){
+        // Keep on adding elements till windowSum is greater than s.
+        windowSum += arr[windowEnd];
+        while(windowSum >= s){
+            // min length will either be the current minlength or the length of the current window.
+            minLength = Math.min(minLength, windowEnd - windowStart);
+            // subtract the windows start from the total
+            windowSum -= windowSum - arr[windowStart];
+            // move the pointer up. 
+            windowStart++
+            // This while loops main objective is to make the window as small as possible. 
+        }
+    }
+    console.log("The max smallest sub array is : ", "with a length of : ", minLength  )
+}
+
+smallest_sum_equal_to_S(7, [2, 1, 5, 2, 3, 2])
