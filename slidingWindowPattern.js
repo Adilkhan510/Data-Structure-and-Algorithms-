@@ -107,8 +107,6 @@ const max_sub_array_of_size_k_refactored = (k, arr) => {
     return max
 }
 console.log(`Maximum sum of a subarray of size K: ${max_sub_array_of_size_k_refactored(3, [2, 1, 5, 1, 3, 2])}`);
-console.log(`Maximum sum of a subarray of size K: ${max_sub_array_of_size_k_refactored(2, [2, 3, 4, 1, 5])}`);
-
 // --------------------------------Problem #3:
 /*
     Given an array of positive numbers and a positive number ‘S’, find the length of the smallest contiguous subarray whose sum is greater than or equal to ‘S’. Return 0, if no such subarray exists.
@@ -128,10 +126,10 @@ const smallest_sum_equal_to_S = (s,arr) => {
         // Keep on adding elements till windowSum is greater than s.
         windowSum += arr[windowEnd];
         while(windowSum >= s){
-            // min length will either be the current minlength or the length of the current window.
-            minLength = Math.min(minLength, windowEnd - windowStart);
+            // min length will either be the current minlength or the length of the current window + 1.
+            minLength = Math.min(minLength, windowEnd - windowStart +1);
             // subtract the windows start from the total
-            windowSum -= windowSum - arr[windowStart];
+            windowSum -= arr[windowStart];
             // move the pointer up. 
             windowStart++
             // This while loops main objective is to make the window as small as possible. 
@@ -141,3 +139,46 @@ const smallest_sum_equal_to_S = (s,arr) => {
 }
 
 smallest_sum_equal_to_S(7, [2, 1, 5, 2, 3, 2])
+
+
+// Problem #4 : 
+
+    //Given a string, find the length of the longest substring in it with no more than K distinct characters.
+    //Input: String="araaci", K=2
+    //Output: 4
+    //Explanation: The longest substring with no more than '2' distinct characters is "araa".
+
+    // inputs : string and a k integer.
+    //outputs : length of the longest substring with no more than K distinct characters.
+
+    // Initial Strategy : 
+        // 1. Use a forloop to loop through the string.
+        // 2.Initialize a variable that will tell us how many current distinct characters that we have.
+        // 3.Use an while loop to check for whenever the distinct characters = K
+
+
+const longest_distinct_subString_kCharacters = (string, K) => {
+    let charsFrequency = {},
+        windowStart = 0,
+        maxLength = -Infinity
+    for(let windowEnd = 0; windowEnd < string.length; windowEnd++){
+        // Insert chars into the set until we reach counter=k
+        const rightChar = string[windowEnd];
+        if(!(rightChar in charsFrequency)){
+            charsFrequency[rightChar] = 0
+        };
+        charsFrequency[rightChar] += 1;
+        while(Object.keys(charsFrequency).length > K){
+            const leftChar = string[windowStart];
+            charsFrequency[leftChar] -= 1;
+            if(charsFrequency[leftChar] === 0){
+                delete charsFrequency[leftChar]
+            };
+            windowStart++
+        }
+        maxLength = Math.max(maxLength, windowEnd - windowStart + 1)
+    }
+    console.log('Max length is', maxLength)
+}
+
+longest_distinct_subString_kCharacters('acraaa', 1)
