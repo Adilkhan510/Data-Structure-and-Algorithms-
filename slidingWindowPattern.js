@@ -195,3 +195,46 @@ const longest_distinct_subString_kCharacters = (string, K) => {
 }
 
 longest_distinct_subString_kCharacters('acr', 2)
+
+/*                                              Problem #5                                                 */
+
+/*Given an array of characters where each character represents a fruit tree, you are given two baskets and your goal is to put maximum number of fruits in each basket. The only restriction is that each basket can have only one type of fruit.*/
+
+//You can start with any tree, but once you have started you can’t skip a tree. You will pick one fruit from each tree until you cannot, i.e., you will stop when you have to pick from a third fruit type.
+
+//Write a function to return the maximum number of fruits in both the baskets. 
+
+
+// Input : 
+        // An array of characters where each character represents a fruit tree.
+        // Output an integer of the longest window i can create.
+// Strategy : 
+    // This is essentially the same problem as K distinct characters.
+
+const fruitsInBasket = (arr) =>{
+    // Initialize variables
+    let windowStart = 0,
+        maxLength = -Infinity,
+        fruitFrequency = {}
+    for(let windowEnd = 0; windowEnd <= arr.length; windowEnd++){
+        const rightFruitTree = arr[windowEnd];
+        if(!(rightFruitTree in fruitFrequency)){
+            fruitFrequency[rightFruitTree] = 0
+        }
+        // Increment the the fruitTree Count
+        fruitFrequency[rightFruitTree] += 1;
+        // If the window is bigger than 2 
+        while(Object.keys(fruitFrequency).length > 2){
+            const leftFruitTree = arr[windowStart];
+            // Decrement the character that is going out.
+            fruitFrequency[leftFruitTree] -= 1;
+            if(fruitFrequency[leftFruitTree] === 0){
+                delete fruitFrequency[leftFruitTree];
+            };
+            // Slide the window forward
+            windowStart++
+        }
+        maxLength = Math.max(maxLength, windowEnd - windowStart + 1)
+    }
+    console.log('The max length is : ', maxLength)
+}
