@@ -150,35 +150,48 @@ smallest_sum_equal_to_S(7, [2, 1, 5, 2, 3, 2])
 
     // inputs : string and a k integer.
     //outputs : length of the longest substring with no more than K distinct characters.
-
-    // Initial Strategy : 
-        // 1. Use a forloop to loop through the string.
-        // 2.Initialize a variable that will tell us how many current distinct characters that we have.
-        // 3.Use an while loop to check for whenever the distinct characters = K
+    // Strategy : 
+        // 1. insert the characters into a Hashmap until we have K distinct characters in the map.
+        // 2. The question asks for the length of the longest window that has no more than K distinct characters. 
+            // Remember the length of this window as the longest window.
+        // Keep on adding characters to the sliding window in a stepwise fashion. 
+        // In each step we will try to shrink this window IF the count distinct characters in the hashmap is greater than K.
+        // While we are shrinking the window we will decrement the character that is going out of the window. 
+        // Delete the character if it equals to zero. 
+        // At the end of each step we will check if the current window length is the longest so far and if so remember the length. 
 
 
 const longest_distinct_subString_kCharacters = (string, K) => {
+    // Initialize the Hashmap, window Start and max Length which we are returning. 
     let charsFrequency = {},
         windowStart = 0,
         maxLength = -Infinity
     for(let windowEnd = 0; windowEnd < string.length; windowEnd++){
-        // Insert chars into the set until we reach counter=k
-        const rightChar = string[windowEnd];
+        // Create a rightChar variable to make code cleaner.
+        const rightChar = string[windowEnd]
+        // Check to see if rightChar exists in the hashmap.
+        // If the character does not exist then we want to initialize it with a value of zero. 
         if(!(rightChar in charsFrequency)){
             charsFrequency[rightChar] = 0
         };
+        // Increment the value by 1.
         charsFrequency[rightChar] += 1;
+        // Checking to see if the length of hashmap is greater than K. 
+        // If it is than we want to shrink the window till we have less than K characters. 
+        // Object.keys() returns an array of all the keys in the object.
         while(Object.keys(charsFrequency).length > K){
             const leftChar = string[windowStart];
+            // Decrement outgoing character by 1.
             charsFrequency[leftChar] -= 1;
             if(charsFrequency[leftChar] === 0){
                 delete charsFrequency[leftChar]
             };
             windowStart++
         }
+        // Update the maxLength
         maxLength = Math.max(maxLength, windowEnd - windowStart + 1)
     }
     console.log('Max length is', maxLength)
 }
 
-longest_distinct_subString_kCharacters('acraaa', 1)
+longest_distinct_subString_kCharacters('acr', 2)
