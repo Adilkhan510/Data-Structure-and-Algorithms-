@@ -238,3 +238,27 @@ const fruitsInBasket = (arr) =>{
     }
     console.log('The max length is : ', maxLength)
 }
+
+/*                                      Problem #6                                                   */
+// Given a string, find the length of the longest substring which has no repeating characters.
+
+const longest_subString_noRepeatingCharacters = (str) => {
+    let charsFrequency = {},
+        start = 0,
+        maxLength = -Infinity
+
+    for(let end = 0; end < str.length ; end++){
+        const rightChar = str[end];
+        // Check to see if the char exists in the HashMap.
+        if(rightChar in charsFrequency){
+            // If char exists then we want to update its value to the new index.
+            start = Math.max(start, end + 1)
+        }
+        charsFrequency[rightChar] = end;
+        maxLength = Math.max(maxLength, end - start + 1 )
+        // Once the position is updated then we want to move the start to that new position. 
+    }
+    return maxLength;
+}
+
+console.log("Longest substring with no repeating character length is :",longest_subString_noRepeatingCharacters("abcdd"))
