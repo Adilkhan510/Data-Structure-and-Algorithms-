@@ -7,7 +7,7 @@
 //  Inputs : Array: [1, 3, 2, 6, -1, 4, 1, 8, 2], K=5
 // --------Naive Solution :
 const avgSum = (arr, n) => {
-    // initialize an empty array 
+    // initialize an empty array where we will store our data.
     const results = [];
     // check for edge cases.
     if(n>arr.length){
@@ -236,11 +236,34 @@ const fruitsInBasket = (arr) =>{
         }
         maxLength = Math.max(maxLength, windowEnd - windowStart + 1)
     }
-    console.log('The max length is : ', maxLength)
+    console.log('Maximum fruits : ', maxLength)
 }
 
+fruitsInBasket(['A', 'B', 'C', 'A', 'C'])
+fruitsInBasket(['A', 'B', 'C', 'B', 'B', 'C'])
 /*                                      Problem #6                                                   */
 // Given a string, find the length of the longest substring which has no repeating characters.
+
+const longest_noRepeat = (str)=> {
+    let longest = -Infinity;
+    let start = 0;
+    let charFreq = {};
+
+    for(let end=0; end < str.length; end++){
+        let currentChar = str[end];
+        // if the charater doesnt exist then add it.
+        if(!charFreq[currentChar]){
+            charFreq[currentChar] = 1;
+        }
+        while()
+
+
+
+
+    }
+}
+
+longest_noRepeat("aabccbb");
 
 const longest_subString_noRepeatingCharacters = (str) => {
     let charsFrequency = {},
