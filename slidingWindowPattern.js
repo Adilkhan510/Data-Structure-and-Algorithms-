@@ -247,20 +247,23 @@ fruitsInBasket(['A', 'B', 'C', 'B', 'B', 'C'])
 const longest_noRepeat = (str)=> {
     let longest = -Infinity;
     let start = 0;
-    let charFreq = {};
+    let charIndexMap = {};
 
     for(let end=0; end < str.length; end++){
         let currentChar = str[end];
-        // if the charater doesnt exist then add it.
-        if(!charFreq[currentChar]){
-            charFreq[currentChar] = 1;
+        // if the character exists in our hashmap then
+        // we want to move the start position up 1;
+        if(currentChar in charIndexMap){
+            start = Math.max(start, charIndexMap[currentChar] + 1)
         }
-        while()
 
+        // Set the new value of the currentChar to be the current index.
 
-
-
+        charIndexMap[currentChar] = end;
+        // 
+        longest = Math.max(longest, end - start +1);
     }
+    return longest
 }
 
 longest_noRepeat("aabccbb");
